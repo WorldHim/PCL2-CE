@@ -78,3 +78,5 @@ jobs:
         asset_path: Plain Craft Launcher 2\obj\${{ matrix.architecture }}\${{ matrix.configuration }}\PCL2_CE_${{ matrix.architecture }}.exe
         asset_name: PCL2_CE_${{ matrix.architecture }}.exe
         asset_content_type: application/octet-stream
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
