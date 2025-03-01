@@ -16,10 +16,6 @@ jobs:
             architecture: x64
             os: windows-latest
 
-          - configuration: Release
-            architecture: ARM64
-            os: self-hosted
-
       fail-fast: false
 
     steps:
