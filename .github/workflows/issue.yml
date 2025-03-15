@@ -1,0 +1,33 @@
+name: Issue Label
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  issue-labeled:
+    if: github.actor != github.event.issue.user.login
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close as completed
+        if: github.event.label.name == '👌 完成'
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'close-issue'
+          close-reason: 'completed'
+
+      - name: Close as not planned
+        if: github.event.label.name == '❌ 忽略' || github.event.label.name == '❌ 不再维护' || github.event.label.name == '❌ 拒绝 / 放弃' || github.event.label.name == '❌ 暂无计划' || github.event.label.name == '❌ 第三方'
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'close-issue'
+          close-reason: 'not_planned'
+
+      - name: Report to upstream
+        if: github.event.label.name == '😂 移交上游'
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'create-comment'
+          body: |
+            @${{ github.event.issue.user.login }} 该提议不应由 CE 解决，请前往上游仓库提交。
+            感谢您的反馈。
